@@ -3,10 +3,22 @@
 
 $tripID = '1923';
 $data=array();
+$selected_data=array();
 $ticket_details=array();
+
+
+//
+foreach($selected_seats as $selected_seat){
+
+    array_push($selected_data, $selected_seat);
+}
+
+
+
+
 foreach($seats as $seat){
-	
-	array_push($data, $seat);
+
+    array_push($data, $seat);
 }
 
 foreach($ticket_ID as $details){
@@ -32,6 +44,7 @@ foreach($ticket_ID as $details){
 <head>
     <title>Seat reservation</title>
 <link rel="stylesheet" href="{{URL::asset('ticketcheck/css/style.css')}}">
+    <meta name="_token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-1.4.1.js" type="text/javascript"></script>
     
 
@@ -95,16 +108,31 @@ foreach($ticket_ID as $details){
             };
 
 
-	function iniseat(reservedSeat) {
+	function iniseatred(reservedSeat) {
 		
 		 for (s = 0; s<reservedSeat.length; s++){
            if (!($('#'+reservedSeat[s]).hasClass(settings.selectedSeatCss))) {
 			$('#'+reservedSeat[s]).toggleClass(settings.selectedSeatCss);
 				
 		   }
+
+
 		   }
 		   
             }
+
+               function iniseatgreen(reservedSeat) {
+
+                   for (s = 0; s<reservedSeat.length; s++){
+                       if (!($('#'+reservedSeat[s]).hasClass(settings.selectedSeatCss))) {
+                           $('#'+reservedSeat[s]).toggleClass(settings.selectingSeatCss);
+
+                       }
+
+
+                   }
+
+               }
 
 	
         $(function () {
@@ -113,14 +141,16 @@ foreach($ticket_ID as $details){
 //data = [1,2,3,4,5,5,6]
             //Case II: If already booked
             var cat;
+            var checkId;
+            var selected=<?php echo json_encode($selected_data) ?>;
         var books = <?php echo json_encode($data) ?>;
             var jticket_details=<?php echo json_encode($ticket_details) ?>;
-iniseat(books);
-	
+iniseatred(books);
+iniseatgreen(selected);
 			
 
             $('.' + settings.seatCss).click(function () {
-
+            checkId=this.id;
 
                 $('#ddd').empty();
 
@@ -164,18 +194,23 @@ iniseat(books);
 
 
                 $('#check').click(function () {
-                    var manuID = "manID="+cat;
-                    console.log("manu_id:"+manuID);
+                    console.log(checkId);
+                    $('#'+ checkId).toggleClass(settings.selectingSeatCss);
+                    var manuID = cat;
+                    console.log(manuID);
+                    var token = $('meta[name="_token"]').attr('content');
                     $.ajax({
                         type: "POST",
-                        url: "connection.php",
-                        data: manuID,
+                        url: "{{route('getMID')}}",
+                        data: {_token:token , 'manuID':manuID},
                         cache: false,
                         success: function (response) {
-                          console.log('done');
+                          console.log(response);
                         }
                     });
                 });
+
+                console.log(settings.selectingSeatCss);
 
 {{--//                {{\App\Http\Controllers\tripController::getData(this.id); }}--}}
 

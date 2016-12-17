@@ -57,6 +57,12 @@ Route::group(['middleware'=>['web']], function () {
 
     ]);
 
+    Route::post('/getMID',[
+        'uses'=>'tripController@getMID',
+        'as'=>'getMID'
+        //return view('conductorPage');
+    ]);//->name('conductorPage');
+
 
    Route::get('/tickets',function(){
 
