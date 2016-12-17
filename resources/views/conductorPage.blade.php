@@ -10,7 +10,7 @@
     conductor page
 
     <table  >
-        <tr>
+        <tr >
             <th>route_ID&emsp; </th>
             <th>&nbsp day &emsp; </th>
             <th>&nbsp start_time &emsp; </th>
@@ -19,21 +19,18 @@
             <th> trip_ID </th>
 
         </tr>
-
+<?php $d=0;?>
         @foreach($trips as $trip)
-            <tr>
-                <td> {!! $trip->route_ID !!}&emsp; </td>
-                <td>{!! $trip->day!!}&emsp;</td>
-                <td>&nbsp&nbsp{!! $trip->start_time !!}&emsp;</td>
-                <td>{!! $trip->end_time!!}&emsp;</td>
-                <td>&nbsp&nbsp{!! $trip->bus_no !!}&emsp;</td>
-                <td><a href="{{route('getOrderID',['trip_ID'=>$trip->trip_ID])}}">{!! $trip->trip_ID!!}&emsp;&emsp;</a></td>
+            <?php $d++; ?>
+            <tr id =<?php echo $d; ?>>
+                <td id="1"> {!! $trip->route_ID !!}&emsp; </td>
+                <td id="2">{!! $trip->day!!}&emsp;</td>
+                <td id="3">&nbsp&nbsp{!! $trip->start_time !!}&emsp;</td>
+                <td id="4">{!! $trip->end_time!!}&emsp;</td>
+                <td id="5">&nbsp&nbsp{!! $trip->bus_no !!}&emsp;</td>
+                <td id="6"><a href="{{route('getOrderID',['trip_ID'=>$trip->trip_ID])}}">{!! $trip->trip_ID!!}&emsp;&emsp;</a></td>
 
-                <td>
-                    {{--<a href="{{route('post.delete',['post_id'=>$post->id])}}">Delete</a>--}}
-                    <a href="{{route('ticketPage')}}">&emsp;Select</a>
-                    <a href="">&emsp;Ignore</a>
-                </td>
+
             </tr>
         @endforeach
 
@@ -57,7 +54,7 @@
 
 
 
-    
+
 
 
 
