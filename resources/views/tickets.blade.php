@@ -1,351 +1,288 @@
-@extends('layouts.master')
 
-@section('title')
-    conductor page!!!
+<?php
 
-@endsection
+$tripID = '1923';
+$data=array();
+$ticket_details=array();
+foreach($seats as $seat){
+	
+	array_push($data, $seat);
+}
 
-@section('content')
+foreach($ticket_ID as $details){
 
-    ticket page
-
-    {{--<link rel="stylesheet" href="public\css\seatingLayout.css">--}}
-    <link rel="stylesheet" href="<?php echo asset('css/seatingLayout.css')?>" type="text/css">
-    {{--{{ html::style('css/seatingLayout.css') }}--}}
-
-    @if(count($ticket_ID)>0)
-        <div class="row">
-            <div class="col-md-6">
-                <ul>
-                    @foreach($ticket_ID as $my_ticket_ID)
-                        <li>{{$my_ticket_ID->seat_no}}</li>
-
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    @endif
+    array_push($ticket_details, $details->order_ID);
+    array_push($ticket_details, $details->ticket_ID);
+    array_push($ticket_details, $details->seat_no);
+    array_push($ticket_details, $details->price);
+    array_push($ticket_details, $details->date_create);
+    array_push($ticket_details, $details->date_due);
+    array_push($ticket_details, $details->status);
+    array_push($ticket_details, $details->ticket_manID);
+}
 
 
-
-    {{--@foreach ($seat as $cbox) {--}}
-    {{--$checked = "";--}}
-    {{--@if (in_array($ticket_ID, $id)) {--}}
-    {{--$checked = 'checked="checked" ';--}}
-    {{--}--}}
-    {{--<'input type="checkbox"  value="'.$id.'" '.$checked.'/>;--}}
-    {{--}--}}
+//$data= array(1,2,3);
+?>
 
 
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seat reservation</title>
+<link rel="stylesheet" href="{{URL::asset('ticketcheck/css/style.css')}}">
+    <script src="https://code.jquery.com/jquery-1.4.1.js" type="text/javascript"></script>
+    
 
 
-    <div class="plane">
-        <div class="cockpit">
-            <h1>Please select a seat</h1>
-        </div>
-        <div class="exit exit--front fuselage">
+	</head>
+<body>
+    <form id="form1" >
+	
+      <h2 style="font-size:1.2em;"> Choose seats by clicking the corresponding seat in the layout below:</h2>
+       <div id="holder"> 
+		<ul  id="place">
+        </ul>    
+	</div>
+	 <div style="width:600px;text-align:center;overflow:auto"> 
+	<ul id="seatDescription">
+<li id="available_seat">Available Seat</li>
+<li id="booked_seat" >Booked Seat</li>
+<li id="selected_seat" >Selected Seat</li>
+	</ul>        </div>
+	<div style="width:580px;text-align:left;margin:5px">	
+		<input type="button" id="btnShowNew" value="Show Selected Seats" /><input type="button" id="btnShow" value="Show All" />            </div>
 
-        </div>
-        <ol class="cabin fuselage">
-            <li class="row row--1">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="1"   checked      />
-                        <label for="1">1</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="1B" />
-                        <label for="1B">1B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="1C" />
-                        <label for="1C">1C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" disabled id="1D" />
-                        <label for="1D">Occupied</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="1E" />
-                        <label for="1E">1E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="1F" />
-                        <label for="1F">1F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--2">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="2" />
-                        <label for="2">2</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="2B" />
-                        <label for="2B">2B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="2C" />
-                        <label for="2C">2C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="2D" />
-                        <label for="2D">2D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="2E" />
-                        <label for="2E">2E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="2F" />
-                        <label for="2F">2F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--3">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="3A" />
-                        <label for="3A">3A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="3B" />
-                        <label for="3B">3B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="3C" />
-                        <label for="3C">3C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="3D" />
-                        <label for="3D">3D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="3E" />
-                        <label for="3E">3E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="3F" />
-                        <label for="3F">3F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--4">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="4A" />
-                        <label for="4A">4A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="4B" />
-                        <label for="4B">4B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="4C" />
-                        <label for="4C">4C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="4D" />
-                        <label for="4D">4D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="4E" />
-                        <label for="4E">4E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="4F" />
-                        <label for="4F">4F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--5">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="5A" />
-                        <label for="5A">5A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="5B" />
-                        <label for="5B">5B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="5C" />
-                        <label for="5C">5C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="5D" />
-                        <label for="5D">5D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="5E" />
-                        <label for="5E">5E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="5F" />
-                        <label for="5F">5F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--6">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="6A" />
-                        <label for="6A">6A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="6B" />
-                        <label for="6B">6B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="6C" />
-                        <label for="6C">6C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="6D" />
-                        <label for="6D">6D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="6E" />
-                        <label for="6E">6E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="6F" />
-                        <label for="6F">6F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--7">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="7A" />
-                        <label for="7A">7A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="7B" />
-                        <label for="7B">7B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="7C" />
-                        <label for="7C">7C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="7D" />
-                        <label for="7D">7D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="7E" />
-                        <label for="7E">7E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="7F" />
-                        <label for="7F">7F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--8">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="8A" />
-                        <label for="8A">8A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="8B" />
-                        <label for="8B">8B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="8C" />
-                        <label for="8C">8C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="8D" />
-                        <label for="8D">8D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="8E" />
-                        <label for="8E">8E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="8F" />
-                        <label for="8F">8F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--9">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="9A" />
-                        <label for="9A">9A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="9B" />
-                        <label for="9B">9B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="9C" />
-                        <label for="9C">9C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="9D" />
-                        <label for="9D">9D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="9E" />
-                        <label for="9E">9E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="9F" />
-                        <label for="9F">9F</label>
-                    </li>
-                </ol>
-            </li>
-            <li class="row row--10">
-                <ol class="seats" type="A">
-                    <li class="seat">
-                        <input type="checkbox" id="10A" />
-                        <label for="10A">10A</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="10B" />
-                        <label for="10B">10B</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="10C" />
-                        <label for="10C">10C</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="10D" />
-                        <label for="10D">10D</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="10E" />
-                        <label for="10E">10E</label>
-                    </li>
-                    <li class="seat">
-                        <input type="checkbox" id="10F" />
-                        <label for="10F">10F</label>
-                    </li>
-                </ol>
-            </li>
-        </ol>
-        <div class="exit exit--back fuselage">
+
+    </form>
+    <script type="text/javascript">
+	
+	            var settings = {
+                rows: 5,
+                cols: 15,
+                rowCssPrefix: 'row-',
+                colCssPrefix: 'col-',
+                seatWidth: 35,
+                seatHeight: 35,
+                seatCss: 'seat',
+                selectedSeatCss: 'selectedSeat',
+				selectingSeatCss: 'selectingSeat'
+            };
+     var bookedSeats =[];
+	
+     iniseats(bookedSeats);
+ 
+	
+	 function iniseats(reservedSeat) {
+		  console.log('fsdsd');
+                var str = [], seatNo, className;
+                for (i = 0; i < settings.rows; i++) {
+                    for (j = 0; j < settings.cols; j++) {
+                        seatNo = (i + j * settings.rows + 1);
+                        className = settings.seatCss + ' ' + settings.rowCssPrefix + i.toString() + ' ' + settings.colCssPrefix + j.toString();
+                        if ($.isArray(reservedSeat) && $.inArray(seatNo, reservedSeat) != -1) {
+                            className += ' ' + settings.selectedSeatCss;
+                        }
+                        str.push('<li class="' + className + '"' +
+										'id ="'+ seatNo +'"'+
+                                  'style="top:' + (i * settings.seatHeight).toString() + 'px;left:' + (j * settings.seatWidth).toString() + 'px">' +
+                                  '<a title="' + seatNo + '">' + seatNo + '</a>' +
+                                  '</li>');
+                    }
+                }
+                $('#place').html(str.join(''));
+            };
+
+
+	function iniseat(reservedSeat) {
+		
+		 for (s = 0; s<reservedSeat.length; s++){
+           if (!($('#'+reservedSeat[s]).hasClass(settings.selectedSeatCss))) {
+			$('#'+reservedSeat[s]).toggleClass(settings.selectedSeatCss);
+				
+		   }
+		   }
+		   
+            }
+
+	
+        $(function () {
+            //case I: Show from starting
+            //init();
+//data = [1,2,3,4,5,5,6]
+            //Case II: If already booked
+            var cat;
+        var books = <?php echo json_encode($data) ?>;
+            var jticket_details=<?php echo json_encode($ticket_details) ?>;
+iniseat(books);
+	
+			
+
+            $('.' + settings.seatCss).click(function () {
+
+
+                $('#ddd').empty();
+
+
+				
+			if ($(this).hasClass(settings.selectedSeatCss)){
+
+                var seat=this.id;
+                for(n=1;n<100;n++){
+                    console.log(this.id+1);
+                    if(seat==jticket_details[2+(n-1)*8]){
+                        console.log('dududud');
+
+                        cat=jticket_details[7+(n-1)*8];
+                        console.log("manufacture id"+cat);
+
+                        $('#ddd').append(
+                                "order_id :"+jticket_details[0 + (n - 1) * 8]+"<br />"
+                                +"ticket_id : "+jticket_details[1+(n-1)*8]+"<br />"
+                                +"seat number : " +jticket_details[2+(n-1)*8]+"<br />"
+                                +"price : "+jticket_details[3+(n-1)*8]+"<br />"
+                                +"date create : " +jticket_details[4+(n-1)*8]+"<br />"
+                                +"date due : "+jticket_details[5+(n-1)*8]+"<br />"
+                                +"status :" +jticket_details[6+(n-1)*8]+"<br />"
+                                +"ticket manufacture id : "+jticket_details[7+(n-1)*8])
+
+
+
+                    }
+                }
+
+
+                var modal = document.getElementById('myModal');
+                var span = document.getElementsByClassName("close")[0];
+                modal.style.display = "block";
+
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+
+                $('#check').click(function () {
+                    var manuID = "manID="+cat;
+                    console.log("manu_id:"+manuID);
+                    $.ajax({
+                        type: "POST",
+                        url: "connection.php",
+                        data: manuID,
+                        cache: false,
+                        success: function (response) {
+                          console.log('done');
+                        }
+                    });
+                });
+
+{{--//                {{\App\Http\Controllers\tripController::getData(this.id); }}--}}
+
+            }
+			else{
+                $(this).toggleClass(settings.selectingSeatCss);
+				console.log(settings.selectingSeatCss);
+				}
+            });
+
+            $('#btnShow').click(function () {
+                var str = [];
+                $.each($('#place li.' + settings.selectedSeatCss + ' a, #place li.'+ settings.selectingSeatCss + ' a'), function (index, value) {
+                    str.push($(this).attr('title'));
+                });
+                alert(str.join(','));
+            })
+
+            $('#btnShowNew').click(function () {
+                var str = [], item;
+                $.each($('#place li.' + settings.selectingSeatCss + ' a'), function (index, value) {
+                    item = $(this).attr('title');                   
+                    str.push(item);                   
+                });
+                alert(str.join(','));
+            })
+        });
+
+
+
+
+
+                /*
+            $(document).ready(function(){
+            setInterval(function(){
+        var tripId ='';
+        var tripIdData = 'tripId='+ tripId;
+        if(tripId!='')
+        {
+                $.ajax({
+                     type: "POST",
+                     url: "connection.php",
+                     data: tripIdData,
+                     cache: false,
+                    success: function(response) {
+                        var newBooking=[];
+                        for ( i =0 ; i<response.length;i++){
+                        newBooking[i]=parseInt( response[i]);
+                        }
+                        iniseat(newBooking);
+
+                    }
+                });
+        }
+            }, 5000);
+        });
+        */
+
+
+//iniseats (1);
+//iniseat($seats);
+
+
+
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-1.4.1.js" type="text/javascript"></script>
+
+ <table  >
+<tr>
+{{--<th>order_ID&emsp; </th>--}}
+<th>&nbsp ticket_manID &emsp; </th>
+<th>&nbsp seat_no &emsp; </th>
+
+
+</tr>
+
+    @foreach($ticket_ID as $id)
+        <tr>
+            {{--<td> {!! $id->order_ID !!}&emsp; </td>--}}
+            <td>{!! $id->ticket_manID!!}&emsp;</td>
+            <td>&nbsp&nbsp{!! $id->seat_no!!}&emsp;</td>
+
+
+        </tr>
+        @endforeach
+
+        </table>
+
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="demo"><b>TICKET DETAILS</b></p>
+            <div id="ddd"></div>
+            <button type="button" id="check">Check</button>
 
         </div>
+
     </div>
 
 
-    {{--<input onclick="change()" type="button" value="available" id="myButton1" />--}}
+    <script src="https://code.jquery.com/jquery-1.4.1.js" type="text/javascript"></script>
 
-    @foreach ($ticket_ID as $my_ticket_Id)
-         $seat= {{$my_ticket_Id->seat_no}}
-         <'input type="checkbox"  value="'.$seat.'" checked/>;
-        {{--return $checked[];--}}
-    @endforeach
-
-
-
-
-
-
-@endsection
+</body>
+</html>

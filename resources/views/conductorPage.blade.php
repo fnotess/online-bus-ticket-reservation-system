@@ -40,6 +40,35 @@
     </table>
 
 
+    <select id="startings">
+        @foreach($trips as $trip)
+        <option value="5">{{$trip->start_time}}</option>
+
+        @endforeach
+    </select>
+
+<!--    --><?php
+//    var e = document.getElementById("starting");
+//    var value = e.options[e.selectedIndex].value;
+//    var text = e.options[e.selectedIndex].text;
+//
+//            $Record=DB::select('select * from trip where starting_time=value');
+//?>
+
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+                <input type="text" class="form-control" placeholder="Search for...">
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+
+    </div><!-- /.row --
+
 
 
 
